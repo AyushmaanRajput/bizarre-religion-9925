@@ -1,10 +1,12 @@
-import './App.css';
+import "./App.css";
+import { AllRoutes } from "./Components/AllRoutes";
+console.log(AllRoutes);
 
 function App() {
   return (
-    <div className="App">
-      This is FinPay
-    </div>
+    <>
+      <AllRoutes />
+    </>
   );
 }
 
