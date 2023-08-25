@@ -1,11 +1,11 @@
 import { getUsers } from "../../Api/getData";
 import { createContext, useState, useEffect } from "react";
-import axios from "axios";
 
 export const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({ children }) => {
   let [users, setUsers] = useState([]);
+  let [isAuth, setAuth] = useState(false);
 
   useEffect(() => {
     populateUsers();
@@ -14,10 +14,14 @@ export const AuthContextProvider = ({ children }) => {
   function populateUsers() {
     getUsers()
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
+        setUsers(res.data);
       })
       .catch((err) => console.log(err));
   }
-  return;
-  <AuthContext.Provider>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ users, isAuth, setAuth }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
