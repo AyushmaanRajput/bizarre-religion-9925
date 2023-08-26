@@ -16,7 +16,7 @@ import {
 import { useContext, useState } from "react";
 import { useToast } from "@chakra-ui/react";
 
-import { Logo } from "./Logo";
+import Logo from "../../Components/Logo";
 import { OAuthButtonGroup } from "./OAuthButtonGroup";
 import { PasswordField } from "./PasswordField";
 import { AuthContext } from "../../Context/Auth/AuthContextProvider";
@@ -25,6 +25,7 @@ let Login = () => {
   const toast = useToast();
   let authContext = useContext(AuthContext);
   let users = authContext.users;
+  let setLoggedInUser = authContext.setLoggedInUser;
   // console.log(users);
   let setAuth = authContext.setAuth;
   let [email, setEmail] = useState("");
@@ -33,8 +34,10 @@ let Login = () => {
   function onSubmitHandler(e) {
     e.preventDefault();
     // console.log(email, password);
+    console.log(users);
     for (let i = 0; i < users.length; i++) {
       if (users[i].email === email && users[i].password === password) {
+        setLoggedInUser(users[i]);
         toast({
           title: "Login Successfull",
           description: "You Have successfully Logged In!",
@@ -93,7 +96,7 @@ let Login = () => {
             </Heading>
             <Text color="fg.muted">
               Don't have an account?{" "}
-              <Link href="#" color="brand.500">
+              <Link href="/signup" color="brand.500">
                 Sign up
               </Link>
             </Text>
@@ -134,7 +137,10 @@ let Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </FormControl>
-                <PasswordField changePassword={changePassword} value={password}/>
+                <PasswordField
+                  changePassword={changePassword}
+                  value={password}
+                />
               </Stack>
               <HStack justify="space-between">
                 <Checkbox defaultChecked>Remember me</Checkbox>
@@ -144,7 +150,7 @@ let Login = () => {
               </HStack>
               <Stack spacing="6">
                 <Button colorScheme="brand" type="submit">
-                  Sign in
+                  Log in
                 </Button>
                 <HStack>
                   <Divider />

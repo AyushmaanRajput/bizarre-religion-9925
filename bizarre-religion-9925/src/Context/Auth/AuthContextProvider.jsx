@@ -6,6 +6,8 @@ export const AuthContext = createContext(null);
 export const AuthContextProvider = ({ children }) => {
   let [users, setUsers] = useState([]);
   let [isAuth, setAuth] = useState(false);
+  let [loggedInUser, setLoggedInUser] = useState({});
+  let [activeTab, setActiveTabFunc] = useState(null);
 
   useEffect(() => {
     populateUsers();
@@ -20,7 +22,17 @@ export const AuthContextProvider = ({ children }) => {
       .catch((err) => console.log(err));
   }
   return (
-    <AuthContext.Provider value={{ users, isAuth, setAuth }}>
+    <AuthContext.Provider
+      value={{
+        users,
+        isAuth,
+        setAuth,
+        loggedInUser,
+        setLoggedInUser,
+        activeTab,
+        setActiveTabFunc,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
