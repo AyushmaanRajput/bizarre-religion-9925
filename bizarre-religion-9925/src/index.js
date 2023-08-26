@@ -5,6 +5,8 @@ import App from "./App";
 import { AuthContextProvider } from "../src/Context/Auth/AuthContextProvider";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import "@fontsource/inter";
+import "@fontsource/open-sans";
 
 const theme = extendTheme({
   colors: {
@@ -21,16 +23,10 @@ const theme = extendTheme({
       900: "#254900",
     },
   },
-  // components: {
-  //   Button: {
-  //     baseStyle: {
-  //       backgroundColor: "brand.500",
-  //       _hover: {
-  //         backgroundColor: "brand.800",
-  //       },
-  //     },
-  //   },
-  // },
+  fonts: {
+    heading: `"Inter", sans-serif`,
+    body: `"Inter", sans-serif`,
+  },
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
