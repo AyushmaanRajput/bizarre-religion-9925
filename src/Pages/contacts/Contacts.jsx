@@ -5,8 +5,17 @@ import ContactCard from "../../Components/ContactCard"; // Adjust the import pat
 
 export default function Contacts() {
   let userContacts = useContext(AuthContext).loggedInUser.contacts;
-  let [contacts, setContacts] = useState(userContacts);
-  console.log(contacts);
+  let users= useContext(AuthContext).users;
+  let filteredUsers = [];
+  for(let i=0;i<userContacts.length;i++){
+    for(let j=0;j<users.length;j++){
+      if(userContacts[i].id==users[j].id){
+        filteredUsers.push(users[j]);
+        break;
+      }
+    }
+  }
+  let [contacts, setContacts] = useState(filteredUsers);
   return (
     <>
       <Text fontSize="4xl">Your Contacts</Text>

@@ -39,6 +39,7 @@ let Login = () => {
     console.log(users);
     for (let i = 0; i < users.length; i++) {
       if (users[i].email === email && users[i].password === password) {
+        localStorage.setItem("user", JSON.stringify(users[i]));
         setLoggedInUser(users[i]);
         toast({
           title: "Login Successfull",
@@ -52,6 +53,8 @@ let Login = () => {
         return;
       }
     }
+    localStorage.removeItem("user");
+    setAuth(false);
     toast({
       title: "Incorrect Credentials",
       description: "Re-check your Credentials or Try Again Later!",

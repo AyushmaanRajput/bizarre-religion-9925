@@ -43,6 +43,7 @@ import NotificationsDropdown from "./NotificationsDropdown";
 import Logo from "./Logo";
 import { useContext, useState, useRef } from "react";
 import { AuthContext } from "../Context/Auth/AuthContextProvider";
+import { useNavigate } from "react-router-dom";
 
 const LinkItems = [
   { name: "Home", icon: FiHome },
@@ -144,11 +145,23 @@ const NavItem = ({ icon, tabName, children, isActive, onClick }) => {
 
 const MobileNav = ({ onOpen, ...rest }) => {
   let user = useContext(AuthContext).loggedInUser;
+  let setAuth = useContext(AuthContext).setAuth;
   let avatarNum = user.avatarNum;
   let notifications = user.notifications;
+  const navigate = useNavigate();
 
   const sortedNotifications = notifications.slice().reverse(); // Reverse chronological order
   let background = useColorModeValue("gray.100", "gray.700");
+
+  function logOutHandler() {
+    setAuth(false);
+    localStorage.removeItem("user");
+    navigate("/login");
+  }
+  const formatDateTime = (dateTimeString) => {
+    const options = { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" };
+    return new Date(dateTimeString).toLocaleString(undefined, options);
+  };
 
   return (
     <Flex
@@ -172,50 +185,47 @@ const MobileNav = ({ onOpen, ...rest }) => {
 
       <Logo display={{ base: "flex", md: "none" }} />
 
-      <HStack spacing={{ base: "0", md: "6" }}>
-        <Popover placement="bottom">
-          <PopoverTrigger>
-            <IconButton
-              as={FiBell}
-              variant="ghost"
-              colorScheme="gray"
-              size="md"
-              p={2}
-            />
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader>Notifications</PopoverHeader>
-            <PopoverBody>
-              <Stack spacing={1}>
-                {sortedNotifications.map((notification) => (
-                  <Box
-                    key={notification.id}
-                    p={2}
-                    borderBottomWidth="1px"
-                    // borderBottomColor={useColorModeValue(
-                    //   "gray.200",
-                    //   "gray.700"
-                    // )}
-                    _hover={{
-                      bg: background,
-                    }}
-                    fontWeight={
-                      notification.status === "unread" ? "bold" : "normal"
-                    }
-                  >
-                    <Text>{notification.message}</Text>
-                    <Text fontSize="sm">{notification.date}</Text>
-                  </Box>
-                ))}
-              </Stack>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
+      <HStack spacing={{ base: "0", md: "6" }} position="relative">
+        <div>
+          <Popover>
+            <PopoverTrigger>
+              <IconButton
+                as={FiBell}
+                variant="ghost"
+                colorScheme="gray"
+                size="md"
+                p={2}
+              />
+            </PopoverTrigger>
+            <PopoverContent position="absolute" right="-10" top="55px">
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverHeader>Notifications</PopoverHeader>
+              <PopoverBody>
+                <Stack spacing={1}>
+                  {sortedNotifications.map((notification) => (
+                    <Box
+                      key={notification.id}
+                      p={2}
+                      borderBottomWidth="1px"
+                      _hover={{
+                        bg: background,
+                      }}
+                      fontWeight={
+                        notification.status === "unread" ? "bold" : "normal"
+                      }
+                    >
+                      <Text>{notification.message}</Text>
+                      <Text fontSize="sm">{formatDateTime(notification.date)}</Text>
+                    </Box>
+                  ))}
+                </Stack>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        </div>
 
         <Flex alignItems={"center"}>
-          {/* ... Your avatar and user menu */}
           <Menu>
             <MenuButton
               py={2}
@@ -250,7 +260,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={logOutHandler}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>

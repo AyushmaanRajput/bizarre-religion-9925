@@ -4,11 +4,15 @@ import { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({ children }) => {
+  let localUser = JSON.parse(localStorage.getItem("user"));
   let [users, setUsers] = useState([]);
   let [subscriptions, setSubscriptions] = useState([]);
-  let [isAuth, setAuth] = useState(false);
-  let [loggedInUser, setLoggedInUser] = useState({});
+  let [isAuth, setAuth] = useState(
+    JSON.parse(localStorage.getItem("user")) ? true : false
+  );
+  let [loggedInUser, setLoggedInUser] = useState(localUser || {});
   let [activeTab, setActiveTabFunc] = useState(null);
+  // console.log(localStorage.getItem("user"));
 
   useEffect(() => {
     populateUsers();
@@ -20,6 +24,13 @@ export const AuthContextProvider = ({ children }) => {
       .then((res) => {
         // console.log(res.data);
         setUsers(res.data);
+        if (localUser) {
+          for (let i = 0; i < res.data.length; i++) {
+            if (localUser.id === res.data[i].id) {
+              setLoggedInUser(res.data[i]);
+            }
+          }
+        }
       })
       .catch((err) => console.log(err));
   }

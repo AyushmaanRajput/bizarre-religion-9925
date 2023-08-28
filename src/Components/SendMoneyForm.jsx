@@ -89,12 +89,17 @@ let SendMoneyForm = ({ user, onClose, fetchUserHandler }) => {
           email: details.sender.email,
         },
       };
+      let monthlyIncomeExpenses = [...details.sender.monthlyIncomeExpenses];
+      let first = monthlyIncomeExpenses[0];
+      first.expenses += +details.amount;
+      console.log(monthlyIncomeExpenses);
 
       let updatedSender = {
         ...details.sender,
         finCoin: details.sender.finCoin + 20,
         balance: Number(details.sender.balance) - details.amount,
         transactions: [...details.sender.transactions, senderTransaction],
+        monthlyIncomeExpenses: monthlyIncomeExpenses,
       };
       let newNotify = createNotification(
         details.amount,
@@ -102,12 +107,20 @@ let SendMoneyForm = ({ user, onClose, fetchUserHandler }) => {
         details.date,
         details.receiver.notifications
       );
+      let monthlyIncomeExpensesRec = [
+        ...details.receiver.monthlyIncomeExpenses,
+      ];
+      let first2 = monthlyIncomeExpensesRec[0];
+      first2.income += +details.amount;
+      console.log(monthlyIncomeExpensesRec);
+
       let updatedReceiver = {
         ...details.receiver,
         finCoin: details.receiver.finCoin + 20,
         balance: Number(details.receiver.balance) + details.amount,
         transactions: [...details.receiver.transactions, receiverTransaction],
         notifications: newNotify,
+        monthlyIncomeExpenses: monthlyIncomeExpensesRec,
       };
 
       await Promise.all([
@@ -138,7 +151,10 @@ let SendMoneyForm = ({ user, onClose, fetchUserHandler }) => {
   async function postUserUpdate(user) {
     try {
       let id = user.id;
-      let res = await axios.put(`https://mock-api-finpay.onrender.com/users/${id}`, user);
+      let res = await axios.put(
+        `https://mock-api-finpay.onrender.com/users/${id}`,
+        user
+      );
       console.log(res.data); // Assuming the server responds with the updated user object
     } catch (err) {
       console.log(err);
@@ -147,7 +163,10 @@ let SendMoneyForm = ({ user, onClose, fetchUserHandler }) => {
 
   async function postGlobalTransaction(obj) {
     try {
-      let res = await axios.post(`https://mock-api-finpay.onrender.com/transactions`, obj);
+      let res = await axios.post(
+        `https://mock-api-finpay.onrender.com/transactions`,
+        obj
+      );
       console.log(res);
     } catch (err) {
       console.log(err);

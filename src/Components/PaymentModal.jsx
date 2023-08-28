@@ -9,7 +9,8 @@ import {
   Button,
 } from "@chakra-ui/react";
 import SendMoneyForm from "./SendMoneyForm";
-import RequestMoneyForm from './RequestMoneyForm'
+import RequestMoneyForm from "./RequestMoneyForm";
+import Recharge from "./Recharge";
 
 let PaymentModal = ({ isOpen, onClose, type, user, fetchUserHandler }) => {
   return (
@@ -41,8 +42,10 @@ let PaymentModal = ({ isOpen, onClose, type, user, fetchUserHandler }) => {
               onClose={onClose}
               fetchUserHandler={fetchUserHandler}
             />
+          ) : type == "Recharge" ? (
+            <Recharge onClose={onClose} user={user} />
           ) : (
-            "HI"
+            <></>
           )}
         </ModalBody>
       </ModalContent>

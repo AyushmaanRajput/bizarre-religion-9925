@@ -9,7 +9,29 @@ import {
   Button,
   Badge,
   useColorModeValue,
+  Textarea,
 } from "@chakra-ui/react";
+
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  FormControl,
+  FormLabel,
+  Flex,
+  Spacer,
+  Input,
+  useToast,
+} from "@chakra-ui/react";
+import { useRef, useState, useContext } from "react";
+import { AuthContext } from "../Context/Auth/AuthContextProvider";
+import { createMessage } from "../Api/notification";
+import axios from "axios";
 
 const avatars = [
   "/avatars/Asian Man.png",
@@ -25,8 +47,59 @@ const avatars = [
 ];
 
 export default function ContactCard({ contact }) {
+  const toast = useToast();
   const { name, email, mobile, avatarNum } = contact;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  let [message, setMessage] = useState("");
 
+  let user = useContext(AuthContext).loggedInUser;
+
+  const initialRef = useRef(null);
+  // console.log(contact);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    let newNotify = createMessage(
+      user.name,
+      message,
+      new Date().toISOString(),
+      contact.notifications
+    );
+    console.log(newNotify);
+    let updatedReceiver = {
+      ...contact,
+      notifications: newNotify,
+    };
+
+    postUserUpdate(updatedReceiver);
+    setMessage("");
+  }
+  async function postUserUpdate(user) {
+    try {
+      let id = user.id;
+      let res = await axios.put(
+        `https://mock-api-finpay.onrender.com/users/${id}`,
+        user
+      );
+      console.log(res.data); // Assuming the server responds with the updated user object
+      toast({
+        title: "Message Sent",
+        description: `Message sent to ${user.name}`,
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    } catch (err) {
+      console.log(err);
+      toast({
+        title: "Something went wrong",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  }
   return (
     <Center py={6}>
       <Box
@@ -89,9 +162,41 @@ export default function ContactCard({ contact }) {
             _focus={{
               bg: "brand.500",
             }}
+            onClick={onOpen}
           >
             Message
           </Button>
+          <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Message :</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody pb={6}>
+                <form onSubmit={handleSubmit}>
+                  <FormControl>
+                    <FormLabel>To : {name}</FormLabel>
+                  </FormControl>
+                  <FormControl mt={4}>
+                    <FormLabel>Message :</FormLabel>
+                    <Textarea
+                      mb={6}
+                      required
+                      placeholder="Enter you message here..."
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                    />
+                  </FormControl>
+                  <Flex>
+                    <Spacer></Spacer>
+                    <Button onClick={onClose}>Cancel</Button>
+                    <Button colorScheme="brand" ml={3} type="submit">
+                      Send Message
+                    </Button>
+                  </Flex>
+                </form>
+              </ModalBody>
+            </ModalContent>
+          </Modal>
         </Stack>
       </Box>
     </Center>

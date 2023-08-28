@@ -24,17 +24,17 @@ const Subscriptions = () => {
   };
 
   return (
-    <>
-      <Text fontSize="4xl">Your Subscriptions</Text>
-      <Flex>
-        <VStack spacing={4} align="stretch">
+    <Box py={12}>
+      <Text fontSize="4xl" mb={8}>Your Subscriptions</Text>
+      <Flex background='white' flexDirection="column" borderRadius={8} p={12} justifyContent={"space-between"} boxShadow='2xl'>
+        <VStack spacing={4} align="stretch" mb={8}>
           <Accordion allowToggle>
             {loggedInUser.subscriptions.map((subscription) => (
               <AccordionItem key={subscription.id}>
                 <h2>
                   <AccordionButton
                     _expanded={{ bg: "brand.500", color: "white" }}
-                    _hover={{ bg: "brand.300", color: "white" }}
+                    _hover={{ bg: "gray.100", color: "black" }}
                     onClick={() => handleSubscriptionClick(subscription)}
                   >
                     <Box flex="1" textAlign="left">
@@ -57,14 +57,14 @@ const Subscriptions = () => {
           <Box
             borderWidth="1px"
             borderRadius="lg"
-            padding={4}
+            padding={8}
             marginLeft={4}
-            width="50%"
+            flex={1}
           >
-            <Text fontSize="xl">Details for {selectedSubscription.name}</Text>
+            <Text fontSize="2xl" mb={2}>Details For {selectedSubscription.name}</Text>
             <Text>Type: {selectedSubscription.type}</Text>
             <Text>Description: {selectedSubscription.description}</Text>
-            <Text>Price: ${selectedSubscription.price}</Text>
+            <Text>Price: ₹{selectedSubscription.price}</Text>
             <Text>Billing Cycle: {selectedSubscription.billing_cycle}</Text>
             <Text>Platform: {selectedSubscription.platform}</Text>
             <Text>Features:</Text>
@@ -76,7 +76,7 @@ const Subscriptions = () => {
           </Box>
         )}
       </Flex>
-    </>
+    </Box>
   );
 };
 

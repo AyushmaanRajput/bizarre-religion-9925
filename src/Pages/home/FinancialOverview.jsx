@@ -5,7 +5,7 @@ import IncomeExpensesBarChart from "../../Components/IncomeExpensesBarChart";
 
 const FinancialOverview = () => {
   return (
-    <>
+    <Box width='100%' mb={12}>
       <Text fontSize="4xl" mb={4}>
         Financial Overview
       </Text>
@@ -30,7 +30,7 @@ const FinancialOverview = () => {
       >
         <IncomeExpensesBarChart />
       </Box>
-    </>
+    </Box>
   );
 };
 
