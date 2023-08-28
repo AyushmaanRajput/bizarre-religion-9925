@@ -64,7 +64,7 @@ const Subscriptions = () => {
             <Text fontSize="2xl" mb={2}>Details For {selectedSubscription.name}</Text>
             <Text>Type: {selectedSubscription.type}</Text>
             <Text>Description: {selectedSubscription.description}</Text>
-            <Text>Price: ₹{selectedSubscription.price}</Text>
+            <Text>Price: ₹{selectedSubscription.amount}</Text>
             <Text>Billing Cycle: {selectedSubscription.billing_cycle}</Text>
             <Text>Platform: {selectedSubscription.platform}</Text>
             <Text>Features:</Text>
