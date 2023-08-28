@@ -132,7 +132,7 @@ let Signup = () => {
     >
       <Stack spacing="8">
         <Stack spacing="6">
-          <Logo />
+          <Logo display="flex"/>
           <Stack
             spacing={{
               base: "2",
@@ -150,7 +150,7 @@ let Signup = () => {
             </Heading>
             <Text color="fg.muted">
               Already have an account?{" "}
-              <Link href="/" color="brand.500">
+              <Link href="/login" color="brand.500">
                 Log In
               </Link>
             </Text>

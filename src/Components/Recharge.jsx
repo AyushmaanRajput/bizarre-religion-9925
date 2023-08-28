@@ -40,6 +40,7 @@ let Recharge = ({ user, onClose }) => {
 
       // Update user's subscriptions with the new subscriptions
       const updatedUserSubs = [...userSubs, ...subscriptionsToAdd];
+      // console.log(updatedUserSubs);
 
       // Make API request to update user subscriptions
       const response = await axios.patch(
@@ -48,7 +49,7 @@ let Recharge = ({ user, onClose }) => {
           subscriptions: updatedUserSubs,
         }
       );
-
+      // console.log(response);
       // Check if the request was successful and handle accordingly
       if (response.status === 200) {
         console.log("Subscriptions updated successfully.");
@@ -97,7 +98,7 @@ let Recharge = ({ user, onClose }) => {
           isChecked={selectedSubscriptions.includes(subscription)}
           onChange={() => handleSubscriptionSelect(subscription)}
         >
-          {subscription.name} - ${subscription.price}
+          {subscription.name} - ${subscription.amount}
         </Checkbox>
       ))}
       <Button onClick={handleRecharge}>Recharge</Button>

@@ -84,7 +84,7 @@ let Login = () => {
     >
       <Stack spacing="8">
         <Stack spacing="6">
-          <Logo />
+          <Logo display="flex"/>
           <Stack
             spacing={{
               base: "2",

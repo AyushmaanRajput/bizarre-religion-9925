@@ -1,5 +1,5 @@
 let Explore=()=>{
-    return <h1>Explore Page</h1>
+    return <h1>Request Page</h1>
 }
 
 export default Explore;
