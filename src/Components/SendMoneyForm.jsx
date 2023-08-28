@@ -238,7 +238,7 @@ let SendMoneyForm = ({ user, onClose, fetchUserHandler }) => {
                 onChange={(e) => setMessage(e.target.value)}
               ></Textarea>
             </FormControl>
-            <Button type="submit">Pay Now</Button>
+            <Button type="submit" colorScheme="brand" mt={4}>Pay Now</Button>
           </Stack>
         </form>
       </Stack>

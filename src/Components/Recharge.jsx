@@ -1,6 +1,6 @@
 import { AuthContext } from "../Context/Auth/AuthContextProvider";
 import { useContext, useState } from "react";
-import { Checkbox, Stack, Button, useToast } from "@chakra-ui/react";
+import { Checkbox, Stack, Container,Button, useToast } from "@chakra-ui/react";
 import axios from "axios";
 
 let Recharge = ({ user, onClose }) => {
@@ -90,7 +90,14 @@ let Recharge = ({ user, onClose }) => {
   );
 
   return (
-    <Stack spacing={4}>
+    <Container
+      maxW="lg"
+      p={{
+        base: "0",
+        sm: "8",
+      }}
+    >
+      <Stack spacing={4}>
       <p>Select subscriptions to recharge:</p>
       {availableSubscriptions.map((subscription) => (
         <Checkbox
@@ -101,8 +108,10 @@ let Recharge = ({ user, onClose }) => {
           {subscription.name} - ${subscription.amount}
         </Checkbox>
       ))}
-      <Button onClick={handleRecharge}>Recharge</Button>
+      <Button onClick={handleRecharge} colorScheme="brand" mt={4}>Recharge</Button>
     </Stack>
+    </Container>
+    
   );
 };
 
