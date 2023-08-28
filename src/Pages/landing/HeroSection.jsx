@@ -1,11 +1,23 @@
-import React from 'react';
-import { Box, Heading, Container, Text, Button, Stack, Icon, useColorModeValue, createIcon, Link } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import React from "react";
+import {
+  Box,
+  Heading,
+  Container,
+  Text,
+  Button,
+  Stack,
+  Image,
+  Icon,
+  useColorModeValue,
+  createIcon,
+  Link,
+} from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 
 export default function HeroSection() {
   const Arrow = createIcon({
-    displayName: 'Arrow',
-    viewBox: '0 0 72 24',
+    displayName: "Arrow",
+    viewBox: "0 0 72 24",
     path: (
       <path
         fillRule="evenodd"
@@ -16,69 +28,63 @@ export default function HeroSection() {
   });
 
   return (
-    <Container maxW={'3xl'}>
+    <Container maxW={"3xl"}>
       <Stack
         as={Box}
-        textAlign={'center'}
+        textAlign={"center"}
         spacing={{ base: 8, md: 14 }}
-        py={{ base: 20, md: 36 }}>
+        py={{ base: 20, md: 36 }}
+      >
         <Heading
           fontWeight={600}
-          fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-          lineHeight={'110%'}>
+          fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
+          lineHeight={"110%"}
+        >
           Best way To manage <br />
-          <Text as={'span'} color={'green.400'}>
+          <Text as={"span"} color={"green.400"}>
             your money
           </Text>
         </Heading>
-        <Text color={'gray.500'}>
-          Manage your finances effectively and effortlessly with our finance management app. Gain insights into your spending patterns and savings goals.
+        <Text color={"gray.500"}>
+          Manage your finances effectively and effortlessly with our finance
+          management app. Gain insights into your spending patterns and savings
+          goals.
         </Text>
         <Stack
-          direction={'column'}
+          direction={"column"}
           spacing={3}
-          align={'center'}
-          alignSelf={'center'}
-          position={'relative'}>
+          align={"center"}
+          alignSelf={"center"}
+          position={"relative"}
+        >
           <Link as={RouterLink} to="/login">
             <Button
               as="span"
-              colorScheme={'green'}
-              bg={'green.400'}
-              rounded={'full'}
+              colorScheme={"green"}
+              bg={"green.400"}
+              rounded={"full"}
               px={6}
               _hover={{
-                bg: 'green.500',
-              }}>
+                bg: "green.500",
+              }}
+            >
               Get Started
             </Button>
           </Link>
           <Link as={RouterLink} to="/learn-more">
-            <Button variant={'link'} colorScheme={'brand'} size={'sm'}>
+            <Button variant={"link"} colorScheme={"brand"} size={"sm"}>
               Learn more
             </Button>
           </Link>
-          <Box>
-            <Icon
-              as={Arrow}
-              color={useColorModeValue('gray.800', 'gray.300')}
-              w={71}
-              position={'absolute'}
-              right={-71}
-              top={'10px'}
-            />
-            <Text
-              fontSize={'lg'}
-              fontFamily={'Caveat'}
-              position={'absolute'}
-              right={'-125px'}
-              top={'-15px'}
-              transform={'rotate(10deg)'}>
-              Starting at $15/mo
-            </Text>
-          </Box>
         </Stack>
       </Stack>
+      <Image
+        src="/Hero.png"
+        objectFit="cover"
+        width={500}
+        marginInline="auto"
+        marginTop={-50}
+      ></Image>
     </Container>
   );
 }
