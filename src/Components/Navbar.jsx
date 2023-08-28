@@ -1,7 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Flex, Image, Link } from "@chakra-ui/react";
-
+import Logo from "./Logo";
 const Navbar = () => {
   return (
     <Box>
@@ -14,7 +14,7 @@ const Navbar = () => {
         mx="auto"
         maxW="3xl"
       >
-        <Image src="/logo.png" alt="Logo"  />
+        <Logo />
         <Link as={RouterLink} to="/login">
           Login
         </Link>
