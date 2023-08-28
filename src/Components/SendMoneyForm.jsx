@@ -43,6 +43,7 @@ let SendMoneyForm = ({ user, onClose, fetchUserHandler }) => {
   const [message, setMessage] = useState("");
 
   const toast = useToast();
+  console.log(user.balance);
 
   const handleContactSelect = (contact) => {
     setSelectedContact(contact);
@@ -225,9 +226,12 @@ let SendMoneyForm = ({ user, onClose, fetchUserHandler }) => {
               <InputGroup>
                 <InputLeftAddon children="₹" />
                 <Input
+                  required
                   type="number"
                   placeholder="Enter Amount"
                   onChange={(e) => setAmount(e.target.value)}
+                  max={user.balance}
+                  min={1}
                 />
               </InputGroup>
             </FormControl>
@@ -238,7 +242,9 @@ let SendMoneyForm = ({ user, onClose, fetchUserHandler }) => {
                 onChange={(e) => setMessage(e.target.value)}
               ></Textarea>
             </FormControl>
-            <Button type="submit" colorScheme="brand" mt={4}>Pay Now</Button>
+            <Button type="submit" colorScheme="brand" mt={4}>
+              Pay Now
+            </Button>
           </Stack>
         </form>
       </Stack>

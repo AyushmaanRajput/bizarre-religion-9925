@@ -3,7 +3,7 @@ export function createNotification(amount, message, date, notifications) {
   let lastId = last.id;
   let obj = {
     id: lastId + 1,
-    message: `Receiver ${amount}: ${message}`,
+    message: `Received ${amount}: ${message}`,
     date: date,
     status: "unread",
   };
