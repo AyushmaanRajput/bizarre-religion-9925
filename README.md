@@ -18,9 +18,9 @@ Whether you're an individual looking to improve your personal finances or a busi
 
 ## Project Links:
 
-- **Vercel Deployment:** [Add Vercel Deployment Link Here](#https://bizarre-religion-9925.vercel.app/)
+- **Vercel Deployment:** [Add Vercel Deployment Link Here](# https://bizarre-religion-9925.vercel.app/)
 
-- **JSON Server:** [Add JSON Server Link Here](#https://mock-api-finpay.onrender.com/)
+- **JSON Server:** [Add JSON Server Link Here](# https://mock-api-finpay.onrender.com/)
 
 ## Tech Stack:
 
